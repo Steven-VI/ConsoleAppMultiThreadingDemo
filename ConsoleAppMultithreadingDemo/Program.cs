@@ -67,7 +67,9 @@ namespace ConsoleAppMultithreadingDemo
             Console.ReadLine();
             */
             #endregion
-
+            #region Intensive Foreach VS Parallel Foreach
+            //Foreach VS Parallel Foreach
+            /*
             List<string> intCollection = new List<string>();
 
             for (int i = 0; i < 1000; i++)
@@ -77,6 +79,18 @@ namespace ConsoleAppMultithreadingDemo
 
             demo.CreateWriteFilesForEach(intCollection);
             demo.CreateWriteFilesParallelForEach(intCollection);
+            Console.ReadLine();
+            */
+            #endregion
+            // Cancel Parallel loop
+            List<string> intCollection = new List<string>();
+            for (int i = 0; i < 1000; i++)
+            {
+                intCollection.Add(i.ToString());
+            }
+
+            demo.CancelParallelForEach(intCollection, 3);
+            Console.WriteLine("Parallel.ForEach loop terminated");
             Console.ReadLine();
         }
     }

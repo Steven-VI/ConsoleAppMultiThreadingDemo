@@ -225,5 +225,27 @@ namespace ConsoleAppMultithreadingDemo
 
             WriteLine($"Parallel foreach File method executed in {timer.Elapsed.TotalSeconds} seconds");
         }
+
+        // Cancelling a parallel foreach loop
+
+        public void CancelParallelForEach(List<string> intCollection, int timeOut)
+        {
+            var timer = Stopwatch.StartNew();
+
+            Parallel.ForEach(intCollection, (integer, state) =>
+            {
+                Thread.Sleep(1000);
+                if (timer.Elapsed.Seconds > timeOut)
+                {
+                    WriteLine($"Terminate thread {Thread.CurrentThread.ManagedThreadId}. " +
+                    $" Elapsed time: {timer.Elapsed.Seconds} seconds");
+                    state.Break();
+                }
+
+                WriteLine($"Processing item {integer} on thread {Thread.CurrentThread.ManagedThreadId}");
+
+            });
+
+        }
     }
 }
