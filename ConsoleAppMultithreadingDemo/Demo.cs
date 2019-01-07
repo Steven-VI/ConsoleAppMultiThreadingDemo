@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Console;
@@ -142,5 +144,36 @@ namespace ConsoleAppMultithreadingDemo
             Thread.Sleep(sleepSeconds * 1000);
             WriteLine($"Thread {threadID} resumed");
         }
+
+        // Using a parallel foreach loop
+        // when dealing with bulk processing
+
+        public double ReadCollectionForeach(List<string> intCollection)
+        {
+            var timer = Stopwatch.StartNew();
+
+            foreach (string integer in intCollection)
+            {
+                WriteLine(integer);
+                Clear();
+            }
+
+            return timer.Elapsed.TotalSeconds;
+        }
+        
+        public double ReadCollectionParallelForeach(List<string> intCollection)
+        {
+            var timer = Stopwatch.StartNew();
+
+            Parallel.ForEach(intCollection, integer =>
+            {
+                WriteLine(integer);
+                Clear();
+            });
+
+            return timer.Elapsed.TotalSeconds;
+        }
+        
+
     }
 }
