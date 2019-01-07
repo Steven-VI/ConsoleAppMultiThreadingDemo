@@ -26,7 +26,12 @@ namespace ConsoleAppMultithreadingDemo
             /*demo.IncreaseThreadpoolSize();
             Console.ReadLine();
             */
+            // Using multiple threads
+            /*
             demo.MultiplethreadWait();
+            Console.ReadLine();
+            */
+            demo.LockThreadExample();
             Console.ReadLine();
         }
     }

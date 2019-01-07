@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Console;
@@ -89,6 +86,35 @@ namespace ConsoleAppMultithreadingDemo
             Thread.Sleep(sleepSeconds * 1000);
             WriteLine($"Wake thread {threadID} at {DateTime.Now.Second} seconds");
 
+        }
+
+        // Locking one Thread until the contended resources are available
+        /// <summary>
+        /// Best practice defining the object to lock on as private
+        /// </summary>
+        private object threadlock = new object();
+
+        public void LockThreadExample()
+        {
+            Task thread1 = Task.Factory.StartNew(() => ContendedResource(3));
+            Task thread2 = Task.Factory.StartNew(() => ContendedResource(5));
+            Task thread3 = Task.Factory.StartNew(() => ContendedResource(2));
+
+            Task.WaitAll(thread1, thread2, thread3);
+            WriteLine("All tasks completed");
+        }
+
+        private void ContendedResource(int sleepSeconds)
+        {
+            int threadID = Thread.CurrentThread.ManagedThreadId;
+
+            lock (threadlock)
+            {
+                WriteLine($"Locked for thread {threadID}");
+                Thread.Sleep(sleepSeconds * 1000);
+            }
+
+            WriteLine($"Wake thread {threadID} at {DateTime.Now.Second} seconds");
         }
     }
 }
