@@ -247,5 +247,48 @@ namespace ConsoleAppMultithreadingDemo
             });
 
         }
+
+        // Catching errors in parallel foreach loops
+
+        public void CheckClientMachinesOnline(List<string> ipAddresses, int minimumLive)
+        {
+            try
+            {
+                int machineCount = ipAddresses.Count;
+                var parallelOptions = new ParallelOptions();
+                parallelOptions.MaxDegreeOfParallelism = machineCount;
+                int deadMachines = 0;
+
+                Parallel.ForEach(ipAddresses, parallelOptions, ip =>
+                {
+                    if (MachineReturnedPing(ip))
+                    {
+
+                    }
+                    else
+                    {
+                        if (machineCount - Interlocked.Increment(ref deadMachines) < minimumLive)
+                        {
+                            WriteLine($"Machines to check = {machineCount}");
+                            WriteLine($"Dead machines = {deadMachines}");
+                            WriteLine($"Minimum machines required = {minimumLive}");
+                            WriteLine($"Live Machines = {machineCount - deadMachines}");
+                            throw new Exception($"Minimum machines requirement of {minimumLive} not met");
+                        }
+                    }
+                });
+            }
+            catch (AggregateException aex)
+            {
+                WriteLine("An AggregateException has occurred");
+                throw;
+            }
+        }
+
+        private bool MachineReturnedPing(string ip)
+        {
+            return false;
+        }
+
     }
 }

@@ -82,8 +82,9 @@ namespace ConsoleAppMultithreadingDemo
             Console.ReadLine();
             */
             #endregion
+            #region Cancel Parallel Loop
             // Cancel Parallel loop
-            List<string> intCollection = new List<string>();
+            /*List<string> intCollection = new List<string>();
             for (int i = 0; i < 1000; i++)
             {
                 intCollection.Add(i.ToString());
@@ -91,6 +92,28 @@ namespace ConsoleAppMultithreadingDemo
 
             demo.CancelParallelForEach(intCollection, 3);
             Console.WriteLine("Parallel.ForEach loop terminated");
+            Console.ReadLine();
+            */
+            #endregion
+            // Catch error parallel foreach
+
+            List<string> ipAddresses = new List<string>();
+
+            for (int i = 0; i < 11; i++)
+            {
+                ipAddresses.Add($"10.0.0.{i.ToString()}");
+            }
+
+            try
+            {
+                demo.CheckClientMachinesOnline(ipAddresses, 0);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+            }
+
             Console.ReadLine();
         }
     }
