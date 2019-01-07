@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Console;
@@ -173,7 +174,56 @@ namespace ConsoleAppMultithreadingDemo
 
             return timer.Elapsed.TotalSeconds;
         }
-        
 
+        public void CreateWriteFilesForEach(List<string> intCollection)
+        {
+            WriteLine("Start foreach File method");
+
+            var timer = Stopwatch.StartNew();
+
+            foreach (string integer in intCollection)
+            {
+                string filePath = $"C:\\temp\\output\\ForEach_Log{integer}.txt";
+
+                if(!File.Exists(filePath))
+                {
+                    File.Create(filePath).Dispose();
+                    using (StreamWriter sw = new StreamWriter(filePath, false))
+                    {
+                        sw.WriteLine($"{integer}. Log file start: {DateTime.Now.ToUniversalTime().ToString()}");
+                    
+                    }     
+
+                }
+            }
+
+            WriteLine($"Foreach File method executed in {timer.Elapsed.TotalSeconds} seconds");
+        }
+
+        public void CreateWriteFilesParallelForEach(List<string> intCollection)
+        {
+            WriteLine("Start Parallel foreach File method");
+
+            var timer = Stopwatch.StartNew();
+
+            Parallel.ForEach(intCollection, integer =>
+            {
+
+                string filePath = $"C:\\temp\\output\\ParallelForEach_Log{integer}.txt";
+
+                if (!File.Exists(filePath))
+                {
+                    File.Create(filePath).Dispose();
+                    using (StreamWriter sw = new StreamWriter(filePath, false))
+                    {
+                        sw.WriteLine($"{integer}. Log file start: {DateTime.Now.ToUniversalTime().ToString()}");
+
+                    }
+
+                }
+            });
+
+            WriteLine($"Parallel foreach File method executed in {timer.Elapsed.TotalSeconds} seconds");
+        }
     }
 }

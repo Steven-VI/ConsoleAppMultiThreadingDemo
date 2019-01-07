@@ -51,8 +51,9 @@ namespace ConsoleAppMultithreadingDemo
             Console.ReadLine();
             */
             #endregion
+            #region Simple Foreach VS Parallel Foreach
             // Foreach VS Parallel Foreach
-
+            /*
             List<string> intCollection = new List<string>();
             for (int i = 0; i < 500; i++)
             {
@@ -63,6 +64,19 @@ namespace ConsoleAppMultithreadingDemo
 
             Console.WriteLine($"Foreach finished in {readCollectionForeach}");
             Console.WriteLine($"Parallel foreach finished in {readCollectionParallelForeach}");
+            Console.ReadLine();
+            */
+            #endregion
+
+            List<string> intCollection = new List<string>();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                intCollection.Add(i.ToString());
+            }
+
+            demo.CreateWriteFilesForEach(intCollection);
+            demo.CreateWriteFilesParallelForEach(intCollection);
             Console.ReadLine();
         }
     }
