@@ -22,8 +22,11 @@ namespace ConsoleAppMultithreadingDemo
             backgroundThread.Start();
             Thread.Sleep(5000);
             */
-
-            demo.IncreaseThreadpoolSize();
+            // Increase ThreadpoolSize
+            /*demo.IncreaseThreadpoolSize();
+            Console.ReadLine();
+            */
+            demo.MultiplethreadWait();
             Console.ReadLine();
         }
     }

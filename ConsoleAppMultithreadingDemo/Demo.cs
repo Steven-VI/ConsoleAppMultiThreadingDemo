@@ -69,5 +69,26 @@ namespace ConsoleAppMultithreadingDemo
 
 
         }
+
+        public void MultiplethreadWait()
+        {
+            Task thread1 = Task.Factory.StartNew(() => RunThread(3));
+            Task thread2 = Task.Factory.StartNew(() => RunThread(5));
+            Task thread3 = Task.Factory.StartNew(() => RunThread(2));
+
+            Task.WaitAll(thread1, thread2, thread3);
+            WriteLine("All tasks completed");
+        }
+
+        public void RunThread(int sleepSeconds)
+        {
+            int threadID = Thread.CurrentThread.ManagedThreadId;
+
+            WriteLine($"Sleep thread {threadID} for {sleepSeconds}" +
+                $" seconds at {DateTime.Now.Second} seconds");
+            Thread.Sleep(sleepSeconds * 1000);
+            WriteLine($"Wake thread {threadID} at {DateTime.Now.Second} seconds");
+
+        }
     }
 }
