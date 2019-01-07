@@ -31,7 +31,12 @@ namespace ConsoleAppMultithreadingDemo
             demo.MultiplethreadWait();
             Console.ReadLine();
             */
+            // Locking threads
+            /*
             demo.LockThreadExample();
+            Console.ReadLine();
+            */
+            demo.ParallelInvoke();
             Console.ReadLine();
         }
     }

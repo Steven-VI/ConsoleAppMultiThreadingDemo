@@ -114,7 +114,33 @@ namespace ConsoleAppMultithreadingDemo
                 Thread.Sleep(sleepSeconds * 1000);
             }
 
-            WriteLine($"Wake thread {threadID} at {DateTime.Now.Second} seconds");
+            WriteLine($"Lock released for {threadID} at {DateTime.Now.Second} seconds");
+        }
+
+        // Invoking parallel calls to methods using Parallel.Invoke
+
+        public void ParallelInvoke()
+        {
+            WriteLine($"Parallel.Invoke started at {DateTime.Now.Second} seconds");
+
+            Parallel.Invoke(
+                () => PerformSomeTask(3),
+                () => PerformSomeTask(5),
+                () => PerformSomeTask(2)
+             );
+
+            WriteLine($"Parallel.Invoke completed at {DateTime.Now.Second} seconds");
+
+        }
+
+        private void PerformSomeTask(int sleepSeconds)
+        {
+            int threadID = Thread.CurrentThread.ManagedThreadId;
+
+            WriteLine($"Sleep thread {threadID} for {sleepSeconds}" +
+                $" seconds at {DateTime.Now.Second} seconds");
+            Thread.Sleep(sleepSeconds * 1000);
+            WriteLine($"Thread {threadID} resumed");
         }
     }
 }
